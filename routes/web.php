@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
 Route::get('/', function () {
-    return view('welcome');
-});
+    return redirect('/convenience_stores');
+})->name('root');
+
+Route::resource('convenience_stores', App\Http\Controllers\ConvenienceStoreController::class);

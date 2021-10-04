@@ -1,0 +1,24 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.square-img {
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+}
+
+.square-img-lg {
+    height: 400px;
+    width: 400px;
+    object-fit: cover;
+}
+
+.error {
+    color: red;
+}
