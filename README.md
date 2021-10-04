@@ -1,64 +1,85 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# こんびにナビ
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## About This App
+* コンビニを気軽にCRUDできるアプリ
+* 八幡平のコンビニがどこにあるかわかったらいいなと思い作りました
+* 初期データとして、八幡平のコンビニをSeederで登録しています
 
-## About Laravel
+## テーブル定義
+* コンビニカテゴリtable・・・セブンやファミマなどのコンビニのカテゴリ情報を格納
+* コンビニ店舗table・・・各店舗の情報を格納、コンビニカテゴリtableへの外部キーあり
+https://docs.google.com/spreadsheets/d/1H_1_2NfZD-ILBi5e1RKQRcrrv0jm1zurL-JM_3A-hpQ/edit?usp=sharing
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 実装機能
+* CRUD
+  * 各コンビニの店舗がCRUDできるようになっています
+  * バリデーションも実装済
+* 検索
+  * フリーキワードから、検索できるようになってます
+  * 入力したキーワードが、「店名」か「住所」か「PRポイント」か「カテゴリ名」に含まれているかで検索
+* ファイルアップロード
+  * コンビニ店舗の画像は、ファイルアップロードできるようにしました
+  * ファイルアップロードするとき、画面上にプレビュー画像が表示されるようにしました
+  * アップロードした画像は、/storage/app/public/images配下に保存
+* Map
+  * 各店舗の位置情報は、Mapをプロットした情報で登録できるようにしました
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## プラスαで工夫した点
+* 「最寄りのコンビニ」ボタン
+  * 押すと、現在地から最寄りのコンビニを探し、その詳細画面へ遷移
+  * 現在地の緯度経度を、geolocationで取得
+  * 現在地と登録されている店舗の緯度経度との距離を、APIを使って計算
+  * 最も距離が近い店舗情報から、詳細画面を表示
+  * APIの仕様で、レスポンスが悪いです
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 画面
 
-## Learning Laravel
+### 一覧画面
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+![index01](./doc/images/index_01.png)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+![index02](./doc/images/index_02.png)
 
-## Laravel Sponsors
+### 登録画面
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+![create01](./doc/images/create_01.png)
 
-### Premium Partners
+![create02](./doc/images/create_02.png)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
+### 詳細画面
 
-## Contributing
+![show01](./doc/images/show_01.png)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+![show01](./doc/images/show_02.png)
 
-## Code of Conduct
+### 編集画面
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+![edit01](./doc/images/edit_01.png)
 
-## Security Vulnerabilities
+![edit02](./doc/images/edit_02.png)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 最寄りのコンビニ
+「最寄りのコンビニ」ボタンを押すと、、
+![nearest01](./doc/images/nearest_01.png)
+現在地から検索した「最寄りのコンビニ」の詳細画面を表示
+![nearest02](./doc/images/nearest_02.png)
 
-## License
+## 環境構築
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+$ git clone git@github.com:kbanchi1111/kbanchi1111-convenience-store-navi.git
+$ cd kbanchi1111-convenience-store-navi
+$ git switch feature
+$ docker run --rm \
+  -v $(pwd):/opt \
+  -w /opt \
+  laravelsail/php80-composer:latest \
+  bash -c "composer install"
+$ cp .env.example .env
+$ sail up -d
+$ sail artisan key:generate
+$ sail artisan migrate:fresh --seed
+$ sail artisan storage:link
+$ unzip init_images.zip
+$ cp -r images storage/app/public/
+```
