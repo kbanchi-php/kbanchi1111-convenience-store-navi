@@ -19,8 +19,8 @@ class CreateConvenienceStoresTable extends Migration
             $table->integer('convenience_store_category_id')->unsigned()->default(1);
             $table->foreign('convenience_store_category_id')->references('id')->on('convenience_store_categories')->onDelete('cascade');
             $table->string('address')->unique();
-            $table->float('latitude');
-            $table->float('longitude');
+            $table->float('latitude', 20, 15);
+            $table->float('longitude', 20, 15);
             $table->string('img_path')->nullable();
             $table->text('pr')->nullable();
             $table->boolean('toilet');

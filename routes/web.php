@@ -21,4 +21,8 @@ Route::get('/', function () {
     return redirect('/convenience_stores');
 })->name('root');
 
+Route::get('/convenience_stores/nearest', [
+    App\Http\Controllers\ConvenienceStoreController::class, 'nearest'
+])->name('convenience_stores.nearest');
+
 Route::resource('convenience_stores', App\Http\Controllers\ConvenienceStoreController::class);

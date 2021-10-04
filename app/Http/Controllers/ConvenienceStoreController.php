@@ -6,6 +6,7 @@ use App\Models\ConvenienceStore;
 use App\Models\ConvenienceStoreCategory;
 use Illuminate\Http\Request;
 use App\Http\Requests\ConvenienceStoreRequest;
+use GuzzleHttp\Client;
 
 class ConvenienceStoreController extends Controller
 {
@@ -159,5 +160,54 @@ class ConvenienceStoreController extends Controller
     {
         $convenienceStore->delete();
         return redirect()->route('convenience_stores.index');
+    }
+
+    public function nearest(Request $request)
+    {
+        // 現在地の緯度経度を取得
+        $latitude1 = $request->cur_lat;
+        $longitude1 = $request->cur_lng;
+
+        // 緯度経度の距離を計算するためのAPI定義
+        $method = 'GET';
+        $base_url = 'http://vldb.gsi.go.jp/sokuchi/surveycalc/surveycalc/bl2st_calc.pl?outputType=json&ellipsoid=GRS80';
+        $options = [];
+
+        // 登録されているコンビニの数だけ、現在地との距離をAPIで取得
+        $stores = ConvenienceStore::all();
+        $distances = [];
+        foreach ($stores as $store) {
+            $client = new Client();
+            $url = $base_url
+                . '&latitude1=' . $latitude1
+                . '&longitude1=' . $longitude1
+                . '&latitude2=' . $store->latitude
+                . '&longitude2=' . $store->longitude;
+            try {
+                $response = $client->request($method, $url, $options);
+                $body = $response->getBody();
+                $data = json_decode($body, false);
+                $distances[] = [
+                    'id' => $store->id,
+                    'distance' => $data->OutputData->geoLength,
+                ];
+            } catch (\GuzzleHttp\Exception\ClientException $e) {
+                return back();
+            }
+            // APIが10秒間に10リクエストが制限のため、1リクエストごとに1秒sleep
+            sleep(1);
+        }
+
+        // 最も距離が近いコンビニを取得
+        $min = $distances[0];
+        foreach ($distances as $distance) {
+            if ($min["distance"] > $distance["distance"]) {
+                $min = $distance;
+            }
+        }
+
+        // 最も距離が近いコンビニの詳細画面を表示
+        $store = ConvenienceStore::find($min["id"]);
+        return redirect()->route('convenience_stores.show', $store);
     }
 }

@@ -16,7 +16,12 @@
             <a class="btn btn-outline-primary my-2 my-sm-0 mr-2"
                 href="{{ route('convenience_stores.create') }}">新しいコンビニを登録</a>
             <input class="form-control mr-sm-2" type="search" name="keyword" placeholder="キーワード">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">検索する</button>
+            <button class="btn btn-outline-success my-2 my-sm-0 mr-2" type="submit">検索する</button>
+        </form>
+        <form class="form-inline my-2 my-lg-0" mechod="GET" action="{{ route('convenience_stores.nearest') }}">
+            <input type="hidden" name="cur_lat" id="cur_lat" value="{{ old('cur_lat') }}">
+            <input type="hidden" name="cur_lng" id="cur_lng" value="{{ old('cur_lng') }}">
+            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">最寄りのコンビニ</button>
         </form>
     </div>
 </nav>
