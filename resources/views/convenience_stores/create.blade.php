@@ -20,11 +20,11 @@
             @csrf
             <div class="form-group">
                 <label for="name" class="visually-hidden">店名</label>
-                <input class="form-control" type="text" name="name" value="{{ old('name') }}">
+                <input class="form-control" type="text" name="name" value="{{ old('name') }}" required>
             </div>
             <div class="form-group">
                 <label for="category" class="visually-hidden">カテゴリー</label>
-                <select class="form-control" name="category" id="category">
+                <select class="form-control" name="category" id="category" required>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}" @if (old('category') == $category->id) selected  @endif>{{ $category->name }}</option>
                     @endforeach
@@ -32,7 +32,7 @@
             </div>
             <div class="form-group">
                 <label for="address" class="visually-hidden">住所</label>
-                <input class="form-control" type="text" name="address" value="{{ old('address') }}">
+                <input class="form-control" type="text" name="address" value="{{ old('address') }}" required>
             </div>
             <div class="form-group">
                 <label for="pr" class="visually-hidden">PRポイント</label>
@@ -46,14 +46,14 @@
             </div>
             <div class="form-group">
                 <label for="pr" class="visually-hidden">トイレ有無</label>
-                <select class="form-control" name="toilet" id="toilet">
+                <select class="form-control" name="toilet" id="toilet" required>
                     <option value="1" @if (old('toilet', $store->toilet) == '1') selected @endif>あり</option>
                     <option value="0" @if (old('toilet', $store->toilet) == '0') selected @endif>なし</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="parking" class="visually-hidden">駐車場キャパシティ</label>
-                <input class="form-control" type="number" name="parking" value="{{ old('parking') }}">
+                <input class="form-control" type="number" name="parking" value="{{ old('parking') }}" required>
             </div>
             <div class="form-group">
                 <label for="map" class="visually-hidden">地図マップ</label>
